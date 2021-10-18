@@ -1,0 +1,16 @@
+{
+  "name": "tornosoft",
+  "version": "1.0.0",
+  "description": "tornosoft main file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-client": "cd client && yarn start",
+    "start-mongo": "brew services start mongodb-community@5.0",
+    "stop-mongo": "brew services stop mongodb-community@5.0",
+    "deploy-client": "cd client && yarn build && mv build ../server/javascript/client",
+    "start-server": "cd server && yarn start-server"
+  },
+  "author": "Vijaybhoj Raj C M",
+  "license": "ISC"
+}
