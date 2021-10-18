@@ -26,6 +26,7 @@ app.get('/', async(req, res) => {
     res.sendFile('/client/build/index.html',{root: __dirname})
 })
 
+//this is the signup module
 app.post('/signup', async (req, res) => {
     const userInfo: user = req.body
     const users: string | user[] = await returnUser(userInfo)
