@@ -4,3 +4,8 @@ export type EventType = {
         value: string | number | object
     }
 }
+
+export type ResponseDataType = {
+    error?:string,
+    response?:string
+}

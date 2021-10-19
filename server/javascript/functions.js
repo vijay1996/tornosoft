@@ -63,7 +63,6 @@ var returnUser = function (userInfo) { return __awaiter(void 0, void 0, void 0, 
                     })];
             case 1:
                 _a.sent();
-                console.log(returnData);
                 if (returnData.length) {
                     return [2 /*return*/, returnData];
                 }
