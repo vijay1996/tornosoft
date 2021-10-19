@@ -59,10 +59,11 @@ var returnUser = function (userInfo) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, Users.find({ email: userInfo.email }).then(function (user) {
                         returnData = __spreadArray([], user, true);
                     }).catch(function (err) {
-                        error = err;
+                        error = err.error;
                     })];
             case 1:
                 _a.sent();
+                console.log(returnData);
                 if (returnData.length) {
                     return [2 /*return*/, returnData];
                 }

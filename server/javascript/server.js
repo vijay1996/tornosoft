@@ -58,6 +58,7 @@ app.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, func
         return [2 /*return*/];
     });
 }); });
+//this is the signup module
 app.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var userInfo, users, User, userData;
     return __generator(this, function (_a) {
@@ -67,13 +68,14 @@ app.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 
                 return [4 /*yield*/, (0, functions_1.returnUser)(userInfo)];
             case 1:
                 users = _a.sent();
-                if (!(users === '')) return [3 /*break*/, 3];
+                console.log(users);
+                if (!(users.length === 0)) return [3 /*break*/, 3];
                 User = mongoose.model('user', models_1.userSchema);
                 userData = new User(userInfo);
                 return [4 /*yield*/, userData.save()];
             case 2:
                 _a.sent();
-                res.send('added');
+                res.send({ response: "success" });
                 return [3 /*break*/, 4];
             case 3:
                 res.status(500).send({ error: errors_1.errors.english.userExists });
@@ -83,8 +85,20 @@ app.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); });
 app.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var userInfo, users;
     return __generator(this, function (_a) {
-        return [2 /*return*/];
+        switch (_a.label) {
+            case 0:
+                userInfo = req.body;
+                return [4 /*yield*/, (0, functions_1.returnUser)(userInfo)
+                    // if(users && typeof users === user[] && users.length) {
+                    //     console.log(users)
+                    // }
+                ];
+            case 1:
+                users = _a.sent();
+                return [2 /*return*/];
+        }
     });
 }); });
 app.get('/showDocuments', function (req, res) {

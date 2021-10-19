@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
 import { Typography, Paper, TextField, Button, Grid, Link } from "@material-ui/core"
 import { formStyle, errorStyle } from "../mainStyle";
+import { EventType } from '../types';
+import { apiPostCall } from '../function';
 
 const formStyleLocal:{[k:string]: object} = formStyle 
+
+type Data = {
+    error?:string,
+    response?:string
+}
 
 interface propType {
     setDisplay(arg: string): void;
@@ -16,42 +23,36 @@ const Signup: React.FC<propType> = (props) => {
     const [confirm, setConfirm] = useState('')
     const [error, setError] = useState('')
 
-    const handleChange = (event: any) => {
+    const handleChange = (event: EventType) => {
         switch (event.target.name) {
             case 'name':
-                setName(event.target.value)
+                setName(event.target.value as string)
                 break;
             case 'email':
-                setEmail(event.target.value)
+                setEmail(event.target.value as string)
                 break;
             case 'confirm':
-                setConfirm(event.target.value)
+                setConfirm(event.target.value as string)
                 break;
             case 'password':
-                setPassword(event.target.value)
+                setPassword(event.target.value as string)
                 break;
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const user = {
             name,
             email,
             password
         }
-        if (password === confirm) {
-            fetch("http://localhost:8000/signup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
-            }).then((response) => {
-                if (!response.ok) return response.json().then(err => Promise.reject(err))
-                alert(response)
-            }).catch((err)=>{
-                setError(err.error)
-            })
+
+        const data: Data = await apiPostCall("http://localhost:8000/signup", user)
+
+        if (data?.error) {
+            setError(data.error)
+        } else if(data?.response) {
+            alert(data.response)
         }
     }
 

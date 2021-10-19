@@ -10,7 +10,8 @@
     "stop-mongo": "brew services stop mongodb-community@5.0",
     "deploy-client": "cd client && yarn build && mv build ../server/javascript/client",
     "start-server": "cd server && yarn start-server",
-    "setup-local": "cd client && yarn install && cd ../server && yarn install"
+    "setup-local": "cd client && yarn install && cd ../server && yarn install",
+    "type-watch": "cd server && yarn type-watch"
   },
   "author": "Vijaybhoj Raj C M",
   "license": "ISC"
