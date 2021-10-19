@@ -30,18 +30,23 @@ app.get('/', async(req, res) => {
 app.post('/signup', async (req, res) => {
     const userInfo: user = req.body
     const users: string | user[] = await returnUser(userInfo)
-    if (users === '') {
+    console.log(users)
+    if (users.length === 0) {
         const User:any = mongoose.model('user', userSchema)
         const userData = new User(userInfo)
         await userData.save()
-        res.send('added')
+        res.send({response: "success"})
     } else {
         res.status(500).send({error: errors.english.userExists})
     }
 })
 
 app.post('/login', async(req,res) => {
-    
+    const userInfo: user = req.body
+    const users: string | user[] = await returnUser(userInfo)
+    // if(users && typeof users === user[] && users.length) {
+    //     console.log(users)
+    // }
 })
 
 app.get('/showDocuments', (req, res) => {
