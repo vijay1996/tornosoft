@@ -1,15 +1,10 @@
 import React, { useState } from 'react'
 import { Typography, Paper, TextField, Button, Grid, Link } from "@material-ui/core"
 import { formStyle, errorStyle } from "../mainStyle";
-import { EventType } from '../types';
+import { EventType, ResponseDataType } from '../types';
 import { apiPostCall } from '../function';
 
 const formStyleLocal:{[k:string]: object} = formStyle 
-
-type Data = {
-    error?:string,
-    response?:string
-}
 
 interface propType {
     setDisplay(arg: string): void;
@@ -47,7 +42,7 @@ const Signup: React.FC<propType> = (props) => {
             password
         }
 
-        const data: Data = await apiPostCall("http://localhost:8000/signup", user)
+        const data: ResponseDataType = await apiPostCall("http://localhost:8000/signup", user)
 
         if (data?.error) {
             setError(data.error)

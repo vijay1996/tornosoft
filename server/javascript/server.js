@@ -68,7 +68,6 @@ app.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 
                 return [4 /*yield*/, (0, functions_1.returnUser)(userInfo)];
             case 1:
                 users = _a.sent();
-                console.log(users);
                 if (!(users.length === 0)) return [3 /*break*/, 3];
                 User = mongoose.model('user', models_1.userSchema);
                 userData = new User(userInfo);
@@ -78,7 +77,7 @@ app.post('/signup', function (req, res) { return __awaiter(void 0, void 0, void 
                 res.send({ response: "success" });
                 return [3 /*break*/, 4];
             case 3:
-                res.status(500).send({ error: errors_1.errors.english.userExists });
+                res.send({ error: errors_1.errors.english.userExists });
                 _a.label = 4;
             case 4: return [2 /*return*/];
         }
@@ -90,13 +89,18 @@ app.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0
         switch (_a.label) {
             case 0:
                 userInfo = req.body;
-                return [4 /*yield*/, (0, functions_1.returnUser)(userInfo)
-                    // if(users && typeof users === user[] && users.length) {
-                    //     console.log(users)
-                    // }
-                ];
+                return [4 /*yield*/, (0, functions_1.returnUser)(userInfo)];
             case 1:
                 users = _a.sent();
+                if (users && users.length && Array.isArray(users)) {
+                    users.map(function (user) {
+                        if (user.password === userInfo.password) {
+                            res.send({ response: "logged in" });
+                        }
+                    });
+                    res.send({ response: errors_1.errors.english.wrongPassword });
+                }
+                res.send({ response: errors_1.errors.english.userDoesNotExist });
                 return [2 /*return*/];
         }
     });

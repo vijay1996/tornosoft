@@ -15,7 +15,6 @@ export const returnUser = async (userInfo: user) => {
     }).catch((err: Error)=>{
         error = err.error
     })
-    console.log(returnData)
     if(returnData.length) {
         return returnData
     } else {

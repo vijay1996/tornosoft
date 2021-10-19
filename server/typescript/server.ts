@@ -30,23 +30,28 @@ app.get('/', async(req, res) => {
 app.post('/signup', async (req, res) => {
     const userInfo: user = req.body
     const users: string | user[] = await returnUser(userInfo)
-    console.log(users)
     if (users.length === 0) {
         const User:any = mongoose.model('user', userSchema)
         const userData = new User(userInfo)
         await userData.save()
         res.send({response: "success"})
     } else {
-        res.status(500).send({error: errors.english.userExists})
+        res.send({error: errors.english.userExists})
     }
 })
 
-app.post('/login', async(req,res) => {
+app.post('/login', async (req,res) => {
     const userInfo: user = req.body
     const users: string | user[] = await returnUser(userInfo)
-    // if(users && typeof users === user[] && users.length) {
-    //     console.log(users)
-    // }
+    if(users && users.length && Array.isArray(users)) {
+        users.map(user => {
+            if (user.password === userInfo.password) {
+                res.send({response: "logged in"})
+            }
+        })
+        res.send({response: errors.english.wrongPassword})
+    }
+    res.send({response: errors.english.userDoesNotExist})
 })
 
 app.get('/showDocuments', (req, res) => {
